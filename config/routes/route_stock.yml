@@ -1,0 +1,8 @@
+virtualstock:
+ path: / 
+ methods: GET
+ defaults:
+   _controller: Anis\Stockmanagement\controller\StockManagement::home
+   _disable_module_prefix: true
+   _legacy_controller: StockManagement
+   _legacy_link: StockManagement

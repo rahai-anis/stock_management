@@ -1,0 +1,15 @@
+{
+    "name": "anis/stockmanagement",
+    "autoload": {
+        "psr-4": {
+            "Anis\\Stockmanagement\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "anis",
+            "email": "anismohamedrahai@gmail.com"
+        }
+    ],
+    "require": {}
+}

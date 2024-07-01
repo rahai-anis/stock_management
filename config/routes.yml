@@ -1,0 +1,22 @@
+
+
+route_stock:
+  resource: "routes/route_stock.yml"
+  prefix: "/anis/stock"
+update_stock_hattaa:
+ path: /update_stock_hattaa
+ methods: GET
+ defaults:
+   _controller: Anis\Stockmanagement\controller\StockManagement::update_stock_hattaa
+   _disable_module_prefix: true
+   _legacy_controller: StockManagement
+   _legacy_link: StockManagement
+
+handle_upload:
+ path: /handle_upload
+ methods: POST
+ defaults:
+   _controller: Anis\Stockmanagement\controller\StockManagement::handle_upload
+   _disable_module_prefix: true
+   _legacy_controller: StockManagement
+   _legacy_link: StockManagement   
