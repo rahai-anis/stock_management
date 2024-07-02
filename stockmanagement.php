@@ -2,6 +2,8 @@
 declare(strict_type=1);
 require_once __DIR__ . '/vendor/autoload.php';
 use Anis\Stockmanagement\Install\Installer;
+
+//use Anis\Stockmanagement\Controller\LogsController;
 class Stockmanagement extends Module
 {
 public function __construct()
@@ -48,7 +50,8 @@ public function __construct()
     }
     public function getContent()
     {
-       return"test";
+        $logFile = _PS_MODULE_DIR_ . $this->name . '/logs/log.txt';
+       dump($logFile);die;
     }
     public function hookmoduleRoutes()
     {
@@ -66,7 +69,17 @@ public function __construct()
             END
             WHERE id_attribute = " . $product[$i]['id_product_attribute'] . ";";
     
-            \Db::getInstance()->execute($sql);
+            if(\Db::getInstance()->execute($sql)){
+             
+                $message = date('Y-m-d H:i:s') .":Product with ID attribute {$product[$i]['id_product_attribute']} has decreased by {$product[$i]['quantity']} pieces". PHP_EOL;
+               // $logMessage = '[' . date('Y-m-d H:i:s') . '] ' . $message . PHP_EOL;
+                /*$logsController = new LogsController;
+                $logsController->addLog($message);*/
+                $logFile = dirname(__FILE__) . '/src//logs/log.text';
+                if (!file_put_contents($logFile, $message, FILE_APPEND)) {
+                    error_log("Failed to write to log file $logFile");
+                }
+            }
     
         }
         
