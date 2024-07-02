@@ -7,7 +7,7 @@
 
    <a href="{{path('virtualstock')}}" id="box-carts" class="kpi-container box-stats">
   <div class="kpi-content -color1" data-original-title="" data-toggle="pstooltip">
-          <i class="material-icons">shopping</i>
+          <i class="material-icons">dashboard</i>
             <span class="title">Consulter le stock</span>
     <div class="kpi-description">
       <div class="subtitle"><button type="button" class="btn btn-link"><a href="{{path('virtualstock')}}">Link</a></button></div>
@@ -20,7 +20,7 @@
 
   <div id="box-conversion-rate" class="kpi-container box-stats">
   <div class="kpi-content -color1" data-original-title="" data-toggle="pstooltip">
-          <i class="material-icons">assessment</i>
+          <i class="material-icons">edit</i>
             <span class="title">Modifier stock hattaa</span>
     <div class="kpi-description">
       <div class="subtitle">
@@ -43,11 +43,13 @@
 
   <div id="box-average-order" class="kpi-container box-stats">
   <div class="kpi-content -color1" data-original-title="" data-toggle="pstooltip">
-          <i class="material-icons">account_balance_wallet</i>
-            <span class="title">Panier moyen</span>
+          <i class="material-icons">explore</i>
+            <span class="title">exporter le stock</span>
     <div class="kpi-description">
-      <div class="subtitle">30 jours</div>
-      <div class="value">5 264&nbsp;DA HT</div>
+      <div class="subtitle"><button type="button" class="btn btn-link" data-toggle="modal" data-target="#exampleModal">
+  Exporter 
+</button></div>
+      <div class="value"></div>
     </div>
   </div>
   </div>
@@ -78,4 +80,22 @@
     </div>
 </div>
    
-  
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Exporter Excel</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       Veuillez indiquer quel stock à Exporter 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" ><a href="{{ path('export_stock', {'type': 1}) }}">Exporter tous </a></button>
+        <button type="button" class="btn btn-primary"><a href="{{ path('export_stock', {'type': 2}) }}">Exporter que stock hattaa</a></button>
+      </div>
+    </div>
+  </div>
+</div>

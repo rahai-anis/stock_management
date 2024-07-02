@@ -20,3 +20,12 @@ handle_upload:
    _disable_module_prefix: true
    _legacy_controller: StockManagement
    _legacy_link: StockManagement   
+
+export_stock:
+ path: /export_stock
+ methods: GET
+ defaults:
+   _controller: Anis\Stockmanagement\controller\ExportStock::export_stock
+   _disable_module_prefix: true
+   _legacy_controller: ExportStock
+   _legacy_link: ExportStock      
