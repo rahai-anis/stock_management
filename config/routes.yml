@@ -29,3 +29,14 @@ export_stock:
    _disable_module_prefix: true
    _legacy_controller: ExportStock
    _legacy_link: ExportStock      
+
+getLogContent:
+ path: /getLogContent
+ methods: GET
+ defaults:
+   _controller: Anis\Stockmanagement\controller\LogsController::getLogContent
+   _disable_module_prefix: true
+   _legacy_controller: LogsController
+   _legacy_link: LogsController   
+
+   

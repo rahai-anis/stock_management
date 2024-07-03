@@ -1,0 +1,42 @@
+{% extends '@PrestaShop/Admin/layout.html.twig'%}
+{% block content %}
+  {% include '@Modules/stockmanagement/views/templates/twig/navbar.html.twig' %}  
+    <div class="card-body">
+   <table class="grid-table js-grid-table table" style="width: 100%;" id="order_grid_table">
+    <thead class="thead-default" >
+        <tr class="column-headers">
+            <th scope="col" style="width: 15%;">date</th>
+            <th scope="col" style="width: 15%;">event</th>
+        
+        </tr>
+    </thead>   
+    <tbody> 
+        {% for log in logs %}
+        <tr class="column-filters">
+            <td>{{ log.date }}</td>
+            <td>{{ log.message }}</td>
+            
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+ <div class="pagination">
+    {% if currentPage > 1 %}
+        <a href="{{ path('getLogContent', { 'page': currentPage - 1, '_token': app.request.query.get('_token') }) }}">Previous</a>
+    {% endif %}
+
+    {% for i in 1..totalPages %}
+        {% if i == currentPage %}
+            <strong>{{ i }}</strong>
+        {% else %}
+            <a href="{{ path('getLogContent', { 'page': i, '_token': app.request.query.get('_token') }) }}">{{ i }}</a>
+        {% endif %}
+    {% endfor %}
+
+    {% if currentPage < totalPages %}
+        <a href="{{ path('getLogContent', { 'page': currentPage + 1, '_token': app.request.query.get('_token') }) }}">Next</a>
+    {% endif %}
+</div>
+
+</div>
+  {% endblock  %}

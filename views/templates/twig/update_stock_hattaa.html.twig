@@ -1,5 +1,6 @@
 {% extends '@PrestaShop/Admin/layout.html.twig'%}
 {% block content %}
+  {% include '@Modules/stockmanagement/views/templates/twig/navbar.html.twig' %}  
      <div class="container" style="width:100%">
      {% if app.request.query.get('exeption') is not null %}
         <div class="alert alert-danger" role="alert">
