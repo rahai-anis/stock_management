@@ -1,40 +1,31 @@
 {% extends '@PrestaShop/Admin/layout.html.twig'%}
 {% block content %}
-  {% include '@Modules/stockmanagement/views/templates/twig/navbar.html.twig' %}  
+    {% include '@Modules/stockmanagement/views/templates/twig/layouts/navbar.html.twig' %}  
+  {% include '@Modules/stockmanagement/views/templates/twig/layouts/alert.html.twig' %}  
+
      <div class="container" style="width:100%">
-     {% if app.request.query.get('exeption') is not null %}
-        <div class="alert alert-danger" role="alert">
-            {{app.request.query.get('exeption') }}
-</div>
-     {% endif %}
-     {% if app.request.query.get('success') is not null %}
-        <div class="alert alert-success" role="alert">
-            {{app.request.query.get('success') }}
-</div>
-     {% endif %}
+   
         <div class="row justify-content-center">
             <div class="col-md-6">
                <form id="uploadForm" action="{{ path('handle_upload') }}" method="POST" enctype="multipart/form-data">
-               <div class="alert alert-success" style="display:none" id ="alert"role="alert">
+                        <div class="alert alert-success" style="display:none" id ="alert"role="alert">
                             File uploaded successfully 
-                            </div>
+                        </div>
                         <div class="alert alert-warning" role="alert">
                             <strong>Warning:</strong> The current upload will overwrite the existing content of the <em>stock_hattaa</em> table.
                         </div>
 
-                    <div class="dropzone" id="dropzone">
-                        <p>Drag and drop your Excel or CSV file here</p>
-                        <input type="file" id="fileInput" name="fileInput" accept=" .csv" style="display: none;">
-                    </div>
-                     
-                    <div class="row justify-content-center">
-                        <div class="col-md-6">
-                            
-                            <div class="file-content" id="file-content">
-                                <!-- File content will be displayed here -->
+                   
+                        <div class="container mt-5">
+                            <div class="form-group">
+                                <label for="csvFileInput" class="form-label">Upload CSV File</label>
+                                <input type="file" id="csvFileInput" accept=".csv" class="form-control-file">
+                            </div>
+                            <div class="form-group">
+                                <label for="csvContent" class="form-label">CSV Content</label>
+                                <textarea id="csvContent" name="content" rows="20" cols="80" class="form-control"></textarea>
                             </div>
                         </div>
-                     </div>
                     <button type="submit" style="display:none" id="save" class="btn btn-primary mt-3">Upload File</button>
                 </form>
 
@@ -45,92 +36,37 @@
 {% endblock %}
 {% block javascripts %}
     <script>
-        $(document).ready(function() {
-            
-            // Prevent default drag behaviors
-            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-                document.getElementById('dropzone').addEventListener(eventName, preventDefaults, false);
-            });
-
-            function preventDefaults(e) {
-                e.preventDefault();
-                e.stopPropagation();
+    $(document).ready(function() {
+    $('#csvFileInput').on('change', function(event) {
+        var file = event.target.files[0];
+        if (file) {
+            if (file.type !== 'text/csv') {
+                alert('Please select a CSV file.');
+                $('#csvFileInput').val(''); // Reset the file input
+                return;
             }
+             $('#alert').show('fade');
+                $('#save').show('fade');
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var content = e.target.result;
+                $('#csvContent').val(content);
+            };
+            reader.readAsText(file);
+        } else {
+            alert('Please select a CSV file.');
+        }
+    });
+});
 
-            // Highlight drop area when dragging over
-            ['dragenter', 'dragover'].forEach(eventName => {
-                document.getElementById('dropzone').addEventListener(eventName, highlight, false);
-            });
 
-            ['dragleave', 'drop'].forEach(eventName => {
-                document.getElementById('dropzone').addEventListener(eventName, unhighlight, false);
-            });
 
-            function highlight(e) {
-                document.getElementById('dropzone').classList.add('border-primary');
-            }
-
-            function unhighlight(e) {
-                document.getElementById('dropzone').classList.remove('border-primary');
-            }
-
-            // Handle dropped files
-            document.getElementById('dropzone').addEventListener('drop', handleDrop, false);
-
-            function handleDrop(e) {
-               
-                let dt = e.dataTransfer;
-                let files = dt.files;
-
-                //handleFiles(files);
-                       
-                for (let i = 0; i < files.length; i++) {
-                    let file = files[i];
-
-                    // Check if it's an Excel file (optional, you can adjust the MIME type check as needed)
-                     if (/*file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||  // XLSX
-                        file.type === 'application/vnd.ms-excel' ||  */                                   // XLS
-                        file.type === 'text/csv') {     
-                                                                  
-                        $('#alert').show('fade');
-                        displayFileContent(file);
-                    } else {
-                        alert('Please upload an CSV file.');
-                    }
-                }
-            }
-
-           /* function handleFiles(files) {
-        
-            }*/
-             function displayFileContent(file) {
-                let reader = new FileReader();
-
-                reader.onload = function(e) {
-                    let content = e.target.result;
-                   $('#save').show();
-                    document.getElementById('file-content').innerHTML = '<textarea style="display:none" name="content">' + content + '</textarea><pre></pre>';
-                };
-
-                reader.readAsText(file);
-            }
-           /* $('#uploadForm').submit(function(e) {
-               
-            });*/
-        });
     </script>
+   
 {% endblock %}
 
 {% block stylesheet %}
  {{ parent() }}
     <link rel="stylesheet" href="{{ asset('stockmanagement/views/assets/stylesheet/custom.css') }}" />
-      <style>
-    /*    .dropzone {
-            border: 2px dashed #007bff;
-            padding: 0px;
-            text-align: center;
-            cursor: pointer;
-            margin-top: 20px;
-        }*/
-    </style>
+      
 {% endblock %}

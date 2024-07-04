@@ -5,7 +5,9 @@
                       
                         </h3>
  
-     {% include '@Modules/stockmanagement/views/templates/twig/navbar.html.twig' %}  
+       {% include '@Modules/stockmanagement/views/templates/twig/layouts/navbar.html.twig' %}  
+  {% include '@Modules/stockmanagement/views/templates/twig/layouts/alert.html.twig' %}  
+
   <div class="card-body">
    <table class="grid-table js-grid-table table" style="width: 100%;" id="order_grid_table">
     <thead class="thead-default" >

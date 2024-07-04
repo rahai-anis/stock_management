@@ -1,7 +1,13 @@
 {% extends '@PrestaShop/Admin/layout.html.twig'%}
 {% block content %}
-  {% include '@Modules/stockmanagement/views/templates/twig/navbar.html.twig' %}  
+  {% include '@Modules/stockmanagement/views/templates/twig/layouts/navbar.html.twig' %}  
+  {% include '@Modules/stockmanagement/views/templates/twig/layouts/alert.html.twig' %}  
+
     <div class="card-body">
+    <div style="float: right">
+       <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#deleteLogsModal">Delete Logs</button>
+        <button type="button" class="btn btn-primary"><a style="color:#fff" href=""><i  class="material-icons">refresh</i></a></button>
+    </div>
    <table class="grid-table js-grid-table table" style="width: 100%;" id="order_grid_table">
     <thead class="thead-default" >
         <tr class="column-headers">
@@ -21,22 +27,48 @@
     </tbody>
 </table>
  <div class="pagination">
-    {% if currentPage > 1 %}
-        <a href="{{ path('getLogContent', { 'page': currentPage - 1, '_token': app.request.query.get('_token') }) }}">Previous</a>
-    {% endif %}
+   {# First page link #}
+{% if currentPage > 1 %}
+    <a href="{{ path('getLogContent', { 'page': 1, '_token': app.request.query.get('_token') }) }}"><<</a>
+{% endif %}
 
-    {% for i in 1..totalPages %}
-        {% if i == currentPage %}
-            <strong>{{ i }}</strong>
-        {% else %}
-            <a href="{{ path('getLogContent', { 'page': i, '_token': app.request.query.get('_token') }) }}">{{ i }}</a>
-        {% endif %}
-    {% endfor %}
+{# Previous page link #}
+{% if currentPage > 1 %}
+    <a href="{{ path('getLogContent', { 'page': currentPage - 1, '_token': app.request.query.get('_token') }) }}">Previous</a>
+{% endif %}
 
-    {% if currentPage < totalPages %}
-        <a href="{{ path('getLogContent', { 'page': currentPage + 1, '_token': app.request.query.get('_token') }) }}">Next</a>
-    {% endif %}
+{# Page links #}
+
+
+{# Next page link #}
+{% if currentPage < totalPages %}
+    <a href="{{ path('getLogContent', { 'page': currentPage + 1, '_token': app.request.query.get('_token') }) }}">Next</a>
+{% endif %}
+
+{# Last page link #}
+{% if currentPage < totalPages %}
+    <a href="{{ path('getLogContent', { 'page': totalPages, '_token': app.request.query.get('_token') }) }}">>></a>
+{% endif %}
+
 </div>
 
 </div>
+{% set deleteLogsModalId = 'deleteLogsModal' %}
+{% set deleteLogsModalTitle = 'Delete Logs' %}
+{% set deleteLogsModalBody = 'Vous vouler supprimer Les Logs ?' %}
+{% set deleteLogsModalActionUrl = path('addLog', {'message': 'test', 'clearFile': true}) %}
+{% set deleteLogsModalActionLabel = 'Delete' %}
+{% set deleteLogsModalCloseLabel = 'Exit' %}
+{% include '@Modules/stockmanagement/views/templates/twig/layouts/popup.html.twig' with {
+    modalId: deleteLogsModalId,
+    modalTitle: deleteLogsModalTitle,
+    modalBody: deleteLogsModalBody,
+    modalActionUrl: deleteLogsModalActionUrl,
+    modalActionLabel: deleteLogsModalActionLabel,
+    modalActionLabel2: deleteLogsModalCloseLabel,
+    modalActionUrl2: null,
+    modalActionLabel2: deleteLogsModalCloseLabel,
+    modal: 'modal',
+} %}
+ 
   {% endblock  %}

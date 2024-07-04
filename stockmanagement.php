@@ -3,7 +3,7 @@ declare(strict_type=1);
 require_once __DIR__ . '/vendor/autoload.php';
 use Anis\Stockmanagement\Install\Installer;
 
-use Anis\Stockmanagement\Controller\LogsController;
+use Anis\Stockmanagement\controller\LogsController;
 class Stockmanagement extends Module
 {
 public function __construct()
@@ -77,7 +77,7 @@ public function __construct()
                 $message = date('Y-m-d H:i:s') ." : Failed to decrease quantity by {$product[$i]['quantity']} to Product with ID attribute {$product[$i]['id_product_attribute']}  \n ";
               
             }
-            $logsController = new LogsController;
+            $logsController = new LogsController();
             $logsController->addLog($message);
         }
         
@@ -98,13 +98,13 @@ public function __construct()
     
                         if(\Db::getInstance()->execute($sql)){
              
-                            $message = date('Y-m-d H:i:s') ." : Product with ID attribute {$product[$i]['id_product_attribute']} has increased by {$product[$i]['quantity']} pieces \n ";
+                            $message = date('Y-m-d H:i:s') ." : Product with ID attribute {$productAttr['product_attribute_id']} has increased by {$productAttr['product_quantity']} pieces \n ";
                           
                         }else{
-                            $message = date('Y-m-d H:i:s') ." : Failed to increase quantity by {$product[$i]['quantity']} to Product with ID attribute {$product[$i]['id_product_attribute']}  \n ";
+                            $message = date('Y-m-d H:i:s') ." : Failed to increase quantity by {$productAttr['product_quantity']} to Product with ID attribute {$productAttr['product_attribute_id']}  \n ";
                           
                         }
-                        $logsController = new LogsController;
+                        $logsController = new LogsController();
                         $logsController->addLog($message);
             }
         }

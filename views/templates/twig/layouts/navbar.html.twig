@@ -46,9 +46,7 @@
           <i class="material-icons">explore</i>
             <span class="title">exporter le stock</span>
     <div class="kpi-description">
-      <div class="subtitle"><button type="button" class="btn btn-link" data-toggle="modal" data-target="#exampleModal">
-  Exporter 
-</button></div>
+      <div class="subtitle"><button type="button" class="btn btn-link" data-toggle="modal" data-target="#exportExcelModal">Export Excel</button></div>
       <div class="value"></div>
     </div>
   </div>
@@ -82,22 +80,28 @@
     </div>
 </div>
    
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Exporter Excel</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-       Veuillez indiquer quel stock à Exporter 
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" ><a href="{{ path('export_stock', {'type': 1}) }}">Exporter tous </a></button>
-        <button type="button" class="btn btn-primary"><a style="color: white" href="{{ path('export_stock', {'type': 2}) }}">Exporter que stock hattaa</a></button>
-      </div>
-    </div>
-  </div>
-</div>
+ 
+
+<!-- Export Excel Modal -->
+
+{% set exportExcelModalId = 'exportExcelModal' %}
+{% set exportExcelModalTitle = 'Exporter Excel' %}
+{% set exportExcelModalBody = 'Veuillez indiquer quel stock à Exporter' %}
+{% set exportExcelModalActionUrl1 = path('export_stock', {'type': 1}) %}
+{% set exportExcelModalActionLabel1 = 'Exporter tous' %}
+{% set exportExcelModalActionUrl2 = path('export_stock', {'type': 2}) %}
+{% set exportExcelModalActionLabel2 = 'Exporter que stock hattaa' %}
+{% set exportExcelModalCloseLabel = 'Exit' %}
+
+<!-- Include Export Modal for All Stocks -->
+{% include '@Modules/stockmanagement/views/templates/twig/layouts/popup.html.twig' with {
+    modalId: exportExcelModalId,
+    modalTitle: exportExcelModalTitle,
+    modalBody: exportExcelModalBody,
+    modalActionUrl: exportExcelModalActionUrl1,
+    modalActionLabel: exportExcelModalActionLabel1,
+    modalCloseLabel: exportExcelModalCloseLabel,
+    modalActionUrl2: exportExcelModalActionUrl2,
+    modalActionLabel2: exportExcelModalActionLabel2,
+    modal: null,
+} %}

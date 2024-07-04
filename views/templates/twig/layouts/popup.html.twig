@@ -1,0 +1,22 @@
+<!-- Generic Modal Template -->
+<div class="modal fade" id="{{ modalId }}" tabindex="-1" role="dialog" aria-labelledby="{{ modalId }}Label" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="{{ modalId }}Label">{{ modalTitle }}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        {{ modalBody }}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">
+          <a href="{{ modalActionUrl }}" style="color: white;">{{ modalActionLabel }}</a>
+        </button>
+        <button type="button"  class="btn btn-secondary" data-dismiss="{{modal}}"><a href="{{ modalActionUrl2 }}">{{ modalActionLabel2 }}</a></button>
+      </div>
+    </div>
+  </div>
+</div>

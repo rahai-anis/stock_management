@@ -39,4 +39,12 @@ getLogContent:
    _legacy_controller: LogsController
    _legacy_link: LogsController   
 
-   
+addLog:
+ path: /addLog/{message}/{clearFile}
+ methods: GET
+ defaults:
+   _controller: Anis\Stockmanagement\controller\LogsController::addLog
+   _disable_module_prefix: true
+   _legacy_controller: LogsController
+   _legacy_link: LogsController      
+

@@ -4,8 +4,11 @@ namespace Anis\Stockmanagement\Controller;
 use PrestaShopBundle\Controller\Admin\FrameworkBundleAdminController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+
 class Stockmanagement extends FrameworkBundleAdminController
 {
+    
+   
     public function home(Request $request)
     {
         $page = $request->query->getInt('page', 1); // Get the current page number from the query parameters, default to 1 if not provided
@@ -45,7 +48,8 @@ $totalCount = \Db::getInstance()->getValue($countSql);
             ]
         );
     }
-    public function update_stock_hattaa(){
+    public function update_stock_hattaa()
+    {
          return $this->render(
             '@Modules/stockmanagement/views/templates/twig/update_stock_hattaa.html.twig',
             [
@@ -54,7 +58,9 @@ $totalCount = \Db::getInstance()->getValue($countSql);
             ]
         );
     }
-    public function handle_upload(){
+    public function handle_upload()
+    {
+         
         $rows = explode("\n", trim($_POST['content']));
         //dump($rows);
         $titles = explode(',', trim($rows[0]));
@@ -65,11 +71,14 @@ $totalCount = \Db::getInstance()->getValue($countSql);
         // Check if the extracted titles match the expected titles
         if (count($titles) != count($expectedTitles)) {
            $error = "Error: Number of columns doesn't match expected.";
+            
+            
+           
             return $this->redirectToRoute(
                 'update_stock_hattaa',
                 [
-    
-                    'exeption' => $error
+                    'exeption' => $error,
+                    'type' => 'danger',
                 ]
             );
         }
@@ -77,11 +86,12 @@ $totalCount = \Db::getInstance()->getValue($countSql);
         foreach ($expectedTitles as $index => $expectedTitle) {
             if ($titles[$index] != $expectedTitle) {
                $error = "Error: Column '{$titles[$index]}' at index $index doesn't match expected '{$expectedTitle}'.";
+               
                return $this->redirectToRoute(
                 'update_stock_hattaa',
                 [
-    
-                    'exeption' => $error
+                    'exeption' => $error,
+                    'type' => 'danger',
                 ]
             );
             }
@@ -130,24 +140,31 @@ $totalCount = \Db::getInstance()->getValue($countSql);
             $successCount += count($params); // Increment success count
         } else {
           //  echo "Failed to insert chunk starting at row $start.<br>";
+          $error = "Failed to insert chunk starting at row $start";
+           
+            
             return $this->redirectToRoute(
                 'update_stock_hattaa',
                 [
-    
-                    'exeption' => "Failed to insert chunk starting at row $start"
+                    'exeption' => $error,
+                    'type' => 'danger',
                 ]
             );
         }
     }
 
     //echo "Successfully inserted $successCount rows.<br>";
-    return $this->redirectToRoute(
-        'update_stock_hattaa',
-        [
-
-            'success' => "Successfully inserted $successCount rows"
-        ]
-    );
+        $message ="Successfully inserted $successCount rows";
+    
+    
+            
+            return $this->redirectToRoute(
+                'update_stock_hattaa',
+                [
+                    'exeption' => $message,
+                    'type' => 'success',
+                ]
+            );
      
         
     }
